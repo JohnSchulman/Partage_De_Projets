@@ -2,7 +2,13 @@
 
 require_once __DIR__.'/autoload.php';
 // format de données du document
-header('Content-Type: application/json');
+if(isset($_GET['return_type']) && $_GET['return_type'] === 'html') {
+	header('Content-Type: text/html');
+}
+else {
+	header('Content-Type: application/json');
+}
+define('__ROOT__', __DIR__);
 
 try {
 	if(isset($_GET['controller'])) {

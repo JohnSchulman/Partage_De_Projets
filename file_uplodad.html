@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>file upload</title>
+</head>
+<body>
+    <form action="/Projet_B2/?controller=projects&action=add_project"
+          method="post" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="name"><br>
+        <textarea name="description" placeholder="description"></textarea><br>
+        <input type="text" name="author" placeholder="author"><br>
+        <label for="downloadable">Downloadable</label>
+        <input type="checkbox" name="downloadable" id="downloadable"><br>
+        <input type="file" name="project" /><br>
+        <input type="submit" />
+    </form>
+</body>
+</html>

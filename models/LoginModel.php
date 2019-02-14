@@ -4,17 +4,11 @@ session_start();
 class LoginModel extends BaseModel {
 
 	public function user_exists($email, $password) {
+		$password = sha1(sha1($password));
 		$query = $this->mysql->query('SELECT COUNT(*) FROM account WHERE email="'.$email.'" AND password="'.$password.'"');
 		$result = $query->fetch_row();
 
 		return (int)$result[0] === 0 ? false : true;
-
-		/*if((int)$result[0] === 0) {
-			return false;
-		}
-		else {
-			return true;
-		}*/
 	}
 
 	public function get_current_user($email, $password) {

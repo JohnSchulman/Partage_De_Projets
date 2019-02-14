@@ -1,6 +1,8 @@
 <?php
 
 class Controller {
+	const SUCCESS = 'success';
+	const ERROR = 'error';
 	private $method;
 	protected $params;
 

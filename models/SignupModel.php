@@ -21,4 +21,5 @@ class SignupModel extends BaseModel {
 	public function update_account($id, $name, $surname, $email, $password, $phone, $role) {
 
 	}
+
 }

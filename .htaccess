@@ -1,0 +1,8 @@
+Options +FollowSymlinks
+RewriteEngine On
+
+# toutes les urls tapées dans la barre de recherche qui matchent
+# avec la premiere éxpression ( commance par my_project/ et un nom de répertoire qui suit
+# redirige vers la seconde expression en remplaçant $1 par le contenu matché dans l'expression régulière
+RewriteRule ^my_project/([a-zA-Z0-9\_]+)$                         uploads/projects/extracted/$1 [L]
+RewriteRule ^my_project/([a-zA-Z0-9\_]+)/([a-zA-Z0-9\_\.]+)$      uploads/projects/extracted/$1/$2 [L]

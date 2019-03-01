@@ -14,7 +14,9 @@ class SignupController extends Controller {
 	}
 
 	public function signup() {
-		$result = $this->model->add_user($this->get('name'), $this->get('surname'), $this->get('email'), sha1(sha1($this->get('password'))), $this->get('phone'), $this->get('role'));
+		$result = $this->model->add_user($this->get('name'), $this->get('surname'),
+										 $this->get('email'), sha1(sha1($this->get('password'))),
+										 $this->get('phone'), $this->get('role'));
 		$status = $result ? self::SUCCESS : self::ERROR;
 		return [
 			'status' => $status

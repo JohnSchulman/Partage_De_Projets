@@ -12,6 +12,7 @@ class LoginModel extends BaseModel {
 	}
 
 	public function get_current_user($email, $password) {
+		$password = sha1(sha1($password));
 		$query = $this->mysql->query('SELECT id, name, surname, email, phone, role, inscription_date FROM account WHERE email="'.$email.'" AND password="'.$password.'"');
 		$user = $query->fetch_assoc();
 		return $user;
@@ -38,5 +39,14 @@ class LoginModel extends BaseModel {
 		else {
 			return true;
 		}
+	}
+
+	public function delete_user($id) {
+		if($this->mysql->query('DELETE FROM mail WHERE account = '.$id)) {
+			if($this->mysql->query('DELETE FROM phone WHERE account = '.$id)) {
+				return $this->mysql->query('DELETE FROM account WHERE id = '.$id);
+			}
+		}
+		return false;
 	}
 }

@@ -7,11 +7,13 @@ class SignupModel extends BaseModel {
 	}
 
 	public function add_phone($phone, $account) {
-		return $this->mysql->query('INSERT INTO `phone` (`phone`, `account`) VALUES("'.$phone.'", "'.$account.'")');
+		return $this->mysql->query('INSERT INTO `phone` (`phone`, `account`) 
+											VALUES("'.$phone.'", "'.$account.'")');
 	}
 
 	public function add_email($email, $account) {
-		return $this->mysql->query('INSERT INTO `mail` (`mail`, `account`) VALUES("'.$email.'", "'.$account.'")');
+		return $this->mysql->query('INSERT INTO `mail` (`mail`, `account`) 
+											VALUES("'.$email.'", "'.$account.'")');
 	}
 
 	public function delete_account($id) {

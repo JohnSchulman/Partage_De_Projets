@@ -33,15 +33,16 @@ class ProjectsController extends Controller {
 		// toto.txt
 		// [ toto, txt ]
 		// test.toto.txt.html
-
+        // la fonction explode transforme la chaine en tableau
 		$explode = explode('.', $file['name']);
+		// -1 car commence à zero
 		$extension_upload = $explode[count($explode)-1];
 		if (in_array($extension_upload, $extensions_valides)) {
 			if(!is_dir(__ROOT__.'/uploads/projects/')) {
 				//Créer un dossier 'uploads/projects/'
 				mkdir(__ROOT__.'/uploads/projects/', 0777, true);
 			}
-			//Créer un identifiant difficile à deviner
+			//Créer un identifiant difficile à deviner / encryptage
 			$nom = md5($file['name']);
 			// je met le fichier temporaire dans le repertoire
 			$resultat = move_uploaded_file($file['tmp_name'], __ROOT__.'/uploads/projects/'.$nom.'.zip');
@@ -59,10 +60,25 @@ class ProjectsController extends Controller {
 			}
 
 			$status = $result ? self::SUCCESS : self::ERROR;
+			if($status === self::SUCCESS) {
+				// si j'ai réussie à extraire le fichier je retourne un statut true sinon un statut false
+				if($this->model->extract($nom, $this->post('name'))) {
+					// Si le dezippage à réussi, je lance l'installation avec le fichier install.txt
+					$this->model->install($this->post('name'));
+					return [
+						'status' => true,
+					];
+				}
+			}
 			return [
-				'status' => $status
+				'status' => false,
+				'message' => 'l\'upload à échoué',
 			];
 		}
+		return [
+			'status' => false,
+			'message' => 'l\'extension n\'est pas supportée',
+		];
 	}
 
 	public function upload() {
@@ -71,22 +87,22 @@ class ProjectsController extends Controller {
 	}
 
 	public function delete(){
-
-		if ($this->model->erase($this->get("id")))
-		{
-			$result = [
-				"success" => true
-			];
+		// Si le dezippage à réussi, je lance l'installation avec le fichier install.txt
+		if($this->model->uninstall($this->get('id'))) {
+			if ($this->model->erase($this->get("id"))) {
+				$result = [
+					"success" => true
+				];
+			} else {
+				$result = [
+					"success" => false
+				];
+			}
+			return $result;
 		}
-		else
-		{
-			$result = [
-				"success" => false
-			];
-		}
-
-		return $result;
-
+		return $result = [
+			"success" => false
+		];
 	}
 }
 

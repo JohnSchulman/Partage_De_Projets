@@ -22,7 +22,7 @@ class LoginController extends Controller {
 
 	public function login() {
 		if($this->model->user_exists($this->get('email'), $this->get('password'))) {
-			$user = $this->model->get_current_user($this->params['email'], $this->params['password']);
+			$user = $this->model->get_current_user($this->get('email'), $this->get('password'));
 			$this->model->set_session($user);
 			return $user;
 		}
@@ -38,6 +38,23 @@ class LoginController extends Controller {
 	public function is_logged() {
 		return [
 			'result' => $this->model->get_logged_user(),
+		];
+	}
+
+	public function delete_user() {
+		if($this->get('id')) {
+			if ($this->model->delete_user($this->get('id'))) {
+				return [
+					'status' => 'success'
+				];
+			}
+			return [
+				'status' => 'error'
+			];
+		}
+		return [
+			'status' => 'error',
+			'message' => 'id parameter is requires',
 		];
 	}
 }

@@ -87,7 +87,7 @@ class ProjectsController extends Controller {
 	}
 
 	public function delete(){
-		// Si le dezippage à réussi, je lance l'installation avec le fichier install.txt
+		// Si le dezippage à réussi, je lance deinstallation avec le fichier install.txt
 		if($this->model->uninstall($this->get('id'))) {
 			if ($this->model->erase($this->get("id"))) {
 				$result = [

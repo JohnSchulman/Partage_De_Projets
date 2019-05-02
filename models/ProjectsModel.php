@@ -12,6 +12,7 @@ class ProjectsModel extends BaseModel {
 				// je recupère chaque du clé de data et je les met dans un tabelau associative qui
 				// correspondaera à une ligne de projects
 				'id' => $data['id'],
+				'path' => $data['path'],
 				'name' => $data['name'],
 				'description' => $data['description'],
 				'downloadable' => $data['downloadable'],
@@ -113,6 +114,7 @@ class ProjectsModel extends BaseModel {
 		// requette qui permet de récupérer le nom du projet en fonction de son id
 		$req = $this->mysql->query('SELECT `name` FROM project WHERE id='.$project_id);
 		$project_name = null;
+		// je remplis le tableau avec les noms
 		while (list($name) = $req->fetch_array()) {
 			$project_name = $name;
 			break;
@@ -165,7 +167,7 @@ class ProjectsModel extends BaseModel {
 					}
 					continue;
 				}
-
+				// un test pour un ligne de commande
 				if (!is_null($last_key)) {
 					$commands[$last_key][] = $line;
 				}
@@ -181,6 +183,7 @@ class ProjectsModel extends BaseModel {
 		}
 
 		// Sert à détecter si on est sous windows ou linux
+
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 			$key = 'shell_win';
 		} else {

@@ -1,0 +1,19 @@
+// static permet de appeler une variable sur une classe et non un objet.
+// les methodes statique marche pareil mais fonctionne avec des propriété static
+
+class Visisters {
+	static $count = 0;
+
+	public function __construct() {
+		$this->add();
+	}
+
+	public function add() {
+		self::$count ++;
+	}
+}
+
+new Visisters();
+new Visisters();
+new Visisters();
+Visisters::$count;

@@ -7,6 +7,7 @@ class DatabaseModel extends Model {
 	public function __construct() {
 		// Récupère les données du fichier de configuration conf/mysql.php dans la propriété mysql_conf
 		$this->mysql_conf = new Conf('mysql');
+		// toute les données sont mis dans la variable mysql
 		$this->mysql = new mysqli(
 			$this->mysql_conf->get('host'),
 			$this->mysql_conf->get('user'),

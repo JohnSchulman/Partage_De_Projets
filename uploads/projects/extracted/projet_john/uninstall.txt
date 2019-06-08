@@ -1,8 +1,0 @@
-**php**
-$var = 'toto';
-$object = 'test';
-
-echo $object->test;
-
-**shell**
-rm -r monrepo

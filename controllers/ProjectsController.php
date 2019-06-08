@@ -52,7 +52,7 @@ class ProjectsController extends Controller {
 					$this->post('description'),
 					realpath(__ROOT__.'/uploads/projects/'.$nom.'.zip'),
 					$this->post('author'),
-					(bool)$this->post('downloadable')
+					$this->post('downloadable')
 				);
 			}
 			else {
@@ -88,20 +88,24 @@ class ProjectsController extends Controller {
 
 	public function delete(){
 		// Si le dezippage à réussi, je lance deinstallation avec le fichier install.txt
-		if($this->model->uninstall($this->get('id'))) {
-			if ($this->model->erase($this->get("id"))) {
+		$uninstall = $this->model->uninstall($this->get('id'));
+		if($uninstall['status']) {
+			$delete = $this->model->erase($this->get("id"));
+			if ($delete['status']) {
 				$result = [
 					"success" => true
 				];
 			} else {
 				$result = [
-					"success" => false
+					"success" => false,
+					'message' => $delete['message']
 				];
 			}
 			return $result;
 		}
 		return $result = [
-			"success" => false
+			"success" => false,
+			'message' => $uninstall['message']
 		];
 	}
 }
